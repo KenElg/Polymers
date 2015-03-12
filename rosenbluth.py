@@ -2,7 +2,7 @@
 import numpy as np
 import math
 from LJcalc import ljcalc
-l = 1
+L = 3
 T = 1
 eps = 0.25 
 sig = 0.8
@@ -21,8 +21,8 @@ def Addbead(R,Weight,L,anglenum,U):
     startang=np.random.random() 
     for i in range (anglenum):
         theta = startang + i* 2 * pi/anglenum
-        R[L+1,:]=[R[L,0]+cos(theta),R[L,1]+sin(theta)]
-        compare[i,:]= R[L+1,:]
+        R[L,:]=[R[L-1,0]+cos(theta),R[L-1,1]+sin(theta)]
+        compare[i,:]= R[L-1,:]
         E=ljcalc(R,L+1,U,N)
         w[0,i]=exp(-E)
     W = np.sum(w)
@@ -31,10 +31,11 @@ def Addbead(R,Weight,L,anglenum,U):
     for i in range (len(Track)):   
         if Test < Track[i]:      
             num= i   #check in which of the rows of track our test falls
-    R[L+1]=compare[num,:]
+    R[L-1]=compare[num,:]
     Weight=Weight*W
     if L < N-1:
         Addbead(R,Weight,L+1,anglenum,0)
     return R, Weight
-A = np.zeros((N,2))    
-A,W = Addbead(R,1,1,anglenum,0)
+#A = np.zeros((N,2))    
+#A,W = Addbead(R,1,1,anglenum,0)
+print Addbead(R,1,1,anglenum,0)
