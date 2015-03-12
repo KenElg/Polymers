@@ -4,7 +4,7 @@ implicit none
 real(8), intent(in) :: Pnum
 integer, intent(in) :: n
 real(8), intent(in) :: R(n, 2)
-real(8), intent(inout) :: U(n, 2)
+real(8), intent(inout) :: U
 !f2py intent(in, out) U
 real(8) :: dr(2), dr2
 real(8), parameter :: rmax = 3.2_8
