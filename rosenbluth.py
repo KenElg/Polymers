@@ -1,6 +1,7 @@
 #Rosenbluth
 import numpy as np
 import math
+from LJcalc import LJcalc
 l = 1
 T = 1
 eps = 0.25 
@@ -26,9 +27,11 @@ def Addbead(R,Weight,L,anglenum):
     W = np.sum(w)
     Track = np.cumsum(w/W)
     Test=np.random.random()
-    num= #check in which of the rows of track our test falls
+    for i in range (len(Track)):   
+        if Test < Track(i):      
+            num= i   #check in which of the rows of track our test falls
     R[L+1]=compare[num,:]
     Weight=Weight*W
-    if L<N
+    if L < N:
         Addbead(R,Weight,L+1,anglenum)        
 
