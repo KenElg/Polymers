@@ -1,5 +1,5 @@
 ! LJcalc.f95 --- Calculates forces
-subroutine LJcalc(R,tf,n,Pnum)
+subroutine LJcalc(R,n,Pnum, U)
 implicit none
 real(8), intent(in) :: Pnum
 integer, intent(in) :: n
