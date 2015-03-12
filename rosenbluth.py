@@ -35,3 +35,4 @@ def Addbead(R,Weight,L,anglenum,U):
     Weight=Weight*W
     if L < N:
         Addbead(R,Weight,L+1,anglenum,0)
+    return R, Weight
