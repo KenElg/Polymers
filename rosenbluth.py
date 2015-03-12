@@ -1,7 +1,7 @@
 #Rosenbluth
 import numpy as np
 import math
-from LJcalc import LJcalc
+from LJcalc import ljcalc
 l = 1
 T = 1
 eps = 0.25 
@@ -23,7 +23,7 @@ def Addbead(R,Weight,L,anglenum,U):
         theta = startang + i* 2 * pi/anglenum
         R[L+1]=[R[L,1]+cos(theta),R[L,2]+sin(theta)]
         compare[i,:]=R[L+1]
-        E=LJcalc(R,L+1,U,N)
+        E=ljcalc(R,L+1,U,N)
         w[i]=exp(-E)
     W = np.sum(w)
     Track = np.cumsum(w/W)
@@ -34,5 +34,6 @@ def Addbead(R,Weight,L,anglenum,U):
     R[L+1]=compare[num,:]
     Weight=Weight*W
     if L < N:
-        Addbead(R,Weight,L+1,anglenum,0)        
+        Addbead(R,Weight,L+1,anglenum,0)
+print R        
 
