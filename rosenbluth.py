@@ -29,11 +29,9 @@ def Addbead(R,Weight,L,anglenum,U):
     Track = np.cumsum(w/W)
     Test=np.random.random()
     for i in range (len(Track)):   
-        if Test < Track(i):      
+        if Test < Track[i]:      
             num= i   #check in which of the rows of track our test falls
     R[L+1]=compare[num,:]
     Weight=Weight*W
     if L < N:
         Addbead(R,Weight,L+1,anglenum,0)
-print R        
-
