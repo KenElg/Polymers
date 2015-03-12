@@ -6,16 +6,16 @@ kB = 1.38*10**-23
 T = 1
 eps = 0.25 
 sig = 0.8
-N=5
+N=10
 R = np.zeros ((N,2))
 R[1] = [1,0]
 pi=np.pi
 cos=np.cos
 sin=np.sin
 exp=np.exp
-w = np.zeros((1,6))
-compare=np.zeros((6,2))
 anglenum=6
+w = np.zeros((1,anglenum))
+compare=np.zeros((anglenum,2))
 def Addbead(R,Weight,L,anglenum):
     startang=np.random.random() 
     for i in range (anglenum):
