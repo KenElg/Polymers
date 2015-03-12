@@ -7,19 +7,29 @@ T = 1
 eps = 0.25 
 sig = 0.8
 N=5
-R = np.zeros ((2,2))
+R = np.zeros ((N,2))
 R[1] = [1,0]
-#theta = np.zeros((1,6))
-#r = np.zeros((1,6))
-#E = np.zeros((1,6))
+pi=np.pi
+cos=np.cos
+sin=np.sin
+exp=np.exp
 w = np.zeros((1,6))
-for i in range (6):
-    theta = np.random.random() + i * np.pi/6
-    r = 2* l **2* (1-np.cos(theta))   
-    E = 4 * eps * ( (sig/r)**12 - (sig/r)**6)
-    w[0,i] = math.exp(-E)
-    
-W = np.sum(w)
-w = w/W    
-print w
-#print W
+compare=np.zeros((6,2))
+anglenum=6
+def Addbead(R,Weight,L,anglenum):
+    startang=np.random.random() 
+    for i in range (anglenum):
+        theta = startang + i* 2 * pi/anglenum
+        R[L+1]=[R[L,1]+cos(theta),R[L,2]+sin(theta)]
+        compare[:,i]=R[L+1]
+        E=LJcalc(R)
+        w[i]=exp(-E)
+    W = np.sum(w)
+    Track = np.cumsum(w/W)
+    Test=np.random.random()
+    num= #check in which of the rows of track our test falls
+    R[L+1]=compare[:,num]
+    Weight=Weight*W
+    if L<N
+        Addbead(R,Weight,L+1,anglenum)        
+
