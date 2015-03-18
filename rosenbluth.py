@@ -2,14 +2,15 @@
 import numpy as np
 import math
 from LJcalc import ljcalc
+import matplotlib.pyplot as plt 
 pi=math.pi
 cos=math.cos
 sin=math.sin
 exp=math.exp
 L = 2
 T = 1
-N=np.array([10,20,30,40,50])
-Rend2 = np.zeros((1,(len(N))))
+N=np.arange(10,100)
+Rend2 = np.zeros(((len(N)),1))
 for j in range (len(N)):
     R = np.zeros ((N[j],2))
     R[1,:] = [1,0]
@@ -38,5 +39,7 @@ for j in range (len(N)):
         
         return R, Weight
     R, Weight = Addbead(R,1,L,anglenum,0)
-    Rend2[0,j] = np.sum(R[N[j]-1,:]**2)
-print Rend2
+    Rend2[j,0] = np.sum(R[N[j]-1,:]**2) # end to end distance
+
+plt.semilogy(N,Rend2)
+plt.show()
