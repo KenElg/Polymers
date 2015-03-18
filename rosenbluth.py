@@ -8,8 +8,6 @@ sin=math.sin
 exp=math.exp
 L = 2
 T = 1
-eps = 0.25 
-sig = 0.8
 N=10
 R = np.zeros ((N,2))
 R[1,:] = [1,0]
@@ -32,7 +30,7 @@ def Addbead(R,Weight,L,anglenum,U):
         if Test < Track[i]:      
             num= i   #check in which of the rows of track our test falls
     R[L-1]=compare[num,:]
-    Weight=Weight*W
+    Weight=Weight*np.prod(w)
     if L < N-1:
         Addbead(R,Weight,L+1,anglenum,0)
     return R, Weight
