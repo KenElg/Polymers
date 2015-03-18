@@ -15,7 +15,6 @@ R = np.zeros ((N,2))
 R[1,:] = [1,0]
 anglenum=6
 w = np.zeros((1,anglenum))
-E = np.zeros((1,anglenum))
 compare=np.zeros((anglenum,2))
 U=0
 def Addbead(R,Weight,L,anglenum,U):
@@ -24,8 +23,8 @@ def Addbead(R,Weight,L,anglenum,U):
         theta = startang + i* 2 * pi/anglenum
         R[L,:]=[R[L-1,0]+cos(theta),R[L-1,1]+sin(theta)]
         compare[i,:]= R[L-1,:]
-        E[0,i]=ljcalc(R,L+1,U,N)
-        w[0,i]=exp(-E[0,i])
+        E=ljcalc(R,L+1,U,N)
+        w[0,i]=exp(-E)
     W = np.sum(w)
     Track = np.cumsum(w/W)
     Test=np.random.random()
@@ -37,4 +36,4 @@ def Addbead(R,Weight,L,anglenum,U):
     if L < N-1:
         Addbead(R,Weight,L+1,anglenum,0)
     return R, Weight
-print Addbead(R,1,L,anglenum,0),E,w
+print Addbead(R,1,L,anglenum,0)
