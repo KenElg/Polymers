@@ -23,16 +23,17 @@ for j in range (len(N)):
         for i in range (anglenum):
             theta = startang + i* 2 * pi/anglenum
             R[L,:]=[R[L-1,0]+cos(theta),R[L-1,1]+sin(theta)]
-            compare[i,:]= R[L-1,:]
-            E=ljcalc(R,L+1,U,N[j])
+            compare[i,:]= R[L,:]
+            E=ljcalc(R,L,U,N[j])
             w[0,i]=exp(-E)
+            # print E
         W = np.sum(w)
         Track = np.cumsum(w/W)
         Test=np.random.random()
         for i in range (len(Track)):   
             if Test < Track[i]:      
                 num= i   #check in which of the rows of track our test falls
-        R[L-1]=compare[num,:]
+        R[L]=compare[num,:]
         Weight=Weight*np.prod(w)
         if L < N[j]-1:
             Addbead(R,Weight,L+1,anglenum,0)
@@ -42,4 +43,6 @@ for j in range (len(N)):
     Rend2[j,0] = np.sum(R[N[j]-1,:]**2) # end to end distance
 
 plt.semilogy(N,Rend2)
+plt.show()
+plt.plot(R[:,0],R[:,1])
 plt.show()
