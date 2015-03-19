@@ -17,7 +17,6 @@ for j in range (len(N)):
     anglenum=6
     w = np.zeros((1,anglenum))
     compare=np.zeros((anglenum,2))
-    U=0
     def Addbead(R,Weight,L,anglenum,U):
         startang=np.random.random() 
         for i in range (anglenum):
