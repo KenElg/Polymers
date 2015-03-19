@@ -24,9 +24,9 @@ for j in range (len(N)):
             theta = startang + i* 2 * pi/anglenum
             R[L,:]=[R[L-1,0]+cos(theta),R[L-1,1]+sin(theta)]
             compare[i,:]= R[L,:]
-            E=ljcalc(R,L,U,N[j])
+            E=ljcalc(R,L+1,U,N[j])
             w[0,i]=exp(-E)
-            # print E
+            print E
             # print w
         W = np.sum(w)
         Track = np.cumsum(w/W)
