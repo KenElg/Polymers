@@ -9,12 +9,12 @@ real(8), intent(inout) :: U
 real(8) :: dr(2), dr2
 real(8), parameter :: eps = 0.25
 real (8), parameter :: sig = 0.8
-integer :: i, j
-do i = 0, Pnum
-    do j = 1, i-1
-        dr = R(i,:) - R(j,:)
-        dr2 = sum(dr**2)
-        U=4*eps*(sig**12/dr2**6 - sig**6/dr2**3)        
+integer ::  j
+
+    do j = 1, Pnum-2
+       dr = R(Pnum,:) - R(j,:)
+       dr2 = sum(dr**2)
+       U=4*eps*(sig**12/dr2**6 - sig**6/dr2**3)        
     end do
-end do
+
 end subroutine
