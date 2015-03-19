@@ -11,6 +11,7 @@ L = 2
 T = 1
 N=np.arange(10,100)
 Rend2 = np.zeros(((len(N)),1))
+num=0
 for j in range (len(N)):
     R = np.zeros ((N[j],2))
     R[1,:] = [1,0]
@@ -26,12 +27,17 @@ for j in range (len(N)):
             E=ljcalc(R,L,U,N[j])
             w[0,i]=exp(-E)
             # print E
+            # print w
         W = np.sum(w)
         Track = np.cumsum(w/W)
         Test=np.random.random()
+        #print Track
+        #print Test
         for i in range (len(Track)):   
             if Test < Track[i]:      
-                num= i   #check in which of the rows of track our test falls
+                num = i   #check in which of the rows of track our test falls
+                Test=Test+1 # Ensures we only have 1 found value
+                # print num
         R[L]=compare[num,:]
         Weight=Weight*np.prod(w)
         if L < N[j]-1:
