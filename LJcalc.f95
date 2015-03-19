@@ -14,7 +14,8 @@ integer ::  j
     do j = 1, Pnum-2
        dr = R(Pnum,:) - R(j,:)
        dr2 = sum(dr**2)
-       U=4*eps*(sig**12/dr2**6 - sig**6/dr2**3)        
+       U=U + 4*eps*(sig**12/dr2**6 - sig**6/dr2**3)
+            
     end do
 
 end subroutine
