@@ -26,23 +26,22 @@ for j in range (len(N)):
             compare[i,:]= R[L,:]
             E=ljcalc(R,L+1,U,N[j])
             w[0,i]=exp(-E)
-            print E
-            # print w
+#            print E
         W = np.sum(w)
-        Track = np.cumsum(w/W)
-        Test=np.random.random()
-        #print Track
-        #print Test
-        for i in range (len(Track)):   
-            if Test < Track[i]:      
-                num = i   #check in which of the rows of track our test falls
-                Test=Test+1 # Ensures we only have 1 found value
-                # print num
-        R[L]=compare[num,:]
-        Weight=Weight*np.prod(w)
-        if L < N[j]-1:
-            Addbead(R,Weight,L+1,anglenum,0)
-        
+        if W ==0:
+            print "Beadnumber =", L
+        else:
+            Track = np.cumsum(w/W)
+            Test=np.random.random()
+            for i in range (len(Track)):   
+                if Test < Track[i]:      
+                    num = i   #check in which of the rows of track our test falls
+                    Test=Test+1 # Ensures we only have 1 found value
+                    # print num
+            R[L]=compare[num,:]
+            Weight=Weight*np.prod(w)
+            if L < N[j]-1:
+                Addbead(R,Weight,L+1,anglenum,0)        
         return R, Weight
     R, Weight = Addbead(R,1,L,anglenum,0)
     Rend2[j,0] = np.sum(R[N[j]-1,:]**2) # end to end distance
