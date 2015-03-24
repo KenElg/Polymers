@@ -9,8 +9,8 @@ sin=math.sin
 exp=math.exp
 L = 2
 T = 1
-polsize = 250   #max polymer size
-polpop = 1000    # polymer population
+polsize = 25   #max polymer size
+polpop = 10    # polymer population
 R2 = np.zeros((polpop,polsize))
 num=0
 for j in range (polpop):
@@ -37,7 +37,7 @@ for j in range (polpop):
             for i in range (len(Track)):   
                 if Test < Track[i]:      
                     num = i   #check in which of the rows of track our test falls
-                    Test=Test+1 # Ensures we only have 1 found value
+#                    Test=Test+1 # Ensures we only have 1 found value
                     # print num
             R[L]=compare[num,:]
 #            print R[L,:]
@@ -50,14 +50,21 @@ for j in range (polpop):
         return R, Weight, L, R2
     R, Weight, L, R2 = Addbead(R,1,L,anglenum,0)
 R2[np.where(R2==0)] = np.nan 
+#print R2
 R2mean = np.nanmean(R2,axis=0)
-R2std = np.nanstd(R2,axis=0)
+R2std = np.nanstd(R2,axis=0,dtype=float)
 
 plt.xscale("log", nonposx='clip')
 plt.yscale("log", nonposy='clip')
-plt.errorbar(np.arange(3,polsize+1),R2mean[2:], R2std[2:])
+plt.errorbar(np.arange(3,polsize+1),R2mean[2:], R2std[2:],linestyle = 'none',marker='x')
+
 plt.xlim([2,250])
 plt.xlabel("N")
 plt.ylabel("R^2")
 #plt.plot(R[:,0],R[:,1])
+
+a = 1
+x = np.arange(polsize)
+fit = a*(x-1)**1.5
+plt.plot(x,fit)
 plt.show()
