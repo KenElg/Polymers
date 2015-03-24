@@ -9,11 +9,12 @@ sin=math.sin
 exp=math.exp
 L = 2
 T = 1
-N=np.arange(10,100)
-Rend2 = np.zeros(((len(N)),1))
+polsize = 250   #max polymer size
+polpop = 1000    # polymer population
+R2 = np.zeros((polpop,polsize))
 num=0
-for j in range (len(N)):
-    R = np.zeros ((N[j],2))
+for j in range (polpop):
+    R = np.zeros ((polsize,2))
     R[1,:] = [1,0]
     anglenum=6
     w = np.zeros((1,anglenum))
@@ -24,12 +25,12 @@ for j in range (len(N)):
             theta = startang + i* 2 * pi/anglenum
             R[L,:]=[R[L-1,0]+cos(theta),R[L-1,1]+sin(theta)]
             compare[i,:]= R[L,:]
-            E=ljcalc(R,L+1,U,N[j])
+            E=ljcalc(R,L+1,U,polsize)
             w[0,i]=exp(-E)
 #            print E
         W = np.sum(w)
         if W ==0:
-            print "Beadnumber =", L
+            print "Polymer number=", j, "Beadnumber =", L
         else:
             Track = np.cumsum(w/W)
             Test=np.random.random()
@@ -39,14 +40,24 @@ for j in range (len(N)):
                     Test=Test+1 # Ensures we only have 1 found value
                     # print num
             R[L]=compare[num,:]
-            Weight=Weight*np.prod(w)
-            if L < N[j]-1:
-                Addbead(R,Weight,L+1,anglenum,0)        
-        return R, Weight
-    R, Weight = Addbead(R,1,L,anglenum,0)
-    Rend2[j,0] = np.sum(R[N[j]-1,:]**2) # end to end distance
+#            print R[L,:]
+            R2[j,L] = np.sum(R[L,:]**2) # end to end distance squared 
+            Weight=Weight*W
+            if L < polsize-1:
+                
+                Addbead(R,Weight,L+1,anglenum,0)
+                       
+        return R, Weight, L, R2
+    R, Weight, L, R2 = Addbead(R,1,L,anglenum,0)
+R2[np.where(R2==0)] = np.nan 
+R2mean = np.nanmean(R2,axis=0)
+R2std = np.nanstd(R2,axis=0)
 
-plt.semilogy(N,Rend2)
-plt.show()
-plt.plot(R[:,0],R[:,1])
+plt.xscale("log", nonposx='clip')
+plt.yscale("log", nonposy='clip')
+plt.errorbar(np.arange(3,polsize+1),R2mean[2:], R2std[2:])
+plt.xlim([2,250])
+plt.xlabel("N")
+plt.ylabel("R^2")
+#plt.plot(R[:,0],R[:,1])
 plt.show()
