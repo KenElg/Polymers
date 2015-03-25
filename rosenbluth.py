@@ -9,7 +9,7 @@ sin=math.sin
 exp=math.exp
 L = 2
 T = 1
-polsize = 25   #max polymer size
+polsize = 100  #max polymer size
 polpop = 10    # polymer population
 R2 = np.zeros((polpop,polsize))
 num=0
@@ -37,7 +37,7 @@ for j in range (polpop):
             for i in range (len(Track)):   
                 if Test < Track[i]:      
                     num = i   #check in which of the rows of track our test falls
-#                    Test=Test+1 # Ensures we only have 1 found value
+                    Test=Test+1 # Ensures we only have 1 found value
                     # print num
             R[L]=compare[num,:]
 #            print R[L,:]
