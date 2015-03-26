@@ -52,7 +52,7 @@ for j in range (polpop):
 R2[np.where(R2==0)] = np.nan 
 #print R2
 R2mean = np.nanmean(R2,axis=0)
-R2std = np.nanstd(R2,axis=0,dtype=float)
+R2var = np.nanvar(R2,axis=0,dtype=float)/(np.arange(polsize)**(0.5))
 
 plt.xscale("log", nonposx='clip')
 plt.yscale("log", nonposy='clip')
