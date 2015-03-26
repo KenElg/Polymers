@@ -41,7 +41,7 @@ for j in range (polpop):
                     # print num
             R[L]=compare[num,:]
 #            print R[L,:]
-            R2[j,L] = np.sum(R[L,:]**2) # end to end distance squared 
+            R2[j,L] = np.sum((R[L,:]-R[(L-1),:])**2) # end to end distance squared 
             Weight=Weight*W
             if L < polsize-1:
                 
@@ -49,6 +49,7 @@ for j in range (polpop):
                        
         return R, Weight, L, R2
     R, Weight, L, R2 = Addbead(R,1,L,anglenum,0)
+R2=np.cumsum(R2,axis=1)
 R2[np.where(R2==0)] = np.nan 
 #print R2
 R2mean = np.nanmean(R2,axis=0)
@@ -65,7 +66,7 @@ plt.ylabel("R^2")
 
 a = 1
 x = np.arange(polsize)
-fit = a*(x-1)**1.5
+fit = a*(x-1)**0.75
 plt.plot(x,fit)
 plt.show()
 
