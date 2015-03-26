@@ -56,7 +56,7 @@ R2var = np.nanvar(R2,axis=0,dtype=float)/(np.arange(polsize)**(0.5))
 
 plt.xscale("log", nonposx='clip')
 plt.yscale("log", nonposy='clip')
-plt.errorbar(np.arange(3,polsize+1),R2mean[2:], R2std[2:],linestyle = 'none',marker='x')
+plt.errorbar(np.arange(3,polsize+1),R2mean[2:], R2var[2:],linestyle = 'none',marker='x')
 
 plt.xlim([2,250])
 plt.xlabel("N")
