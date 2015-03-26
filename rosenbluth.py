@@ -68,3 +68,7 @@ x = np.arange(polsize)
 fit = a*(x-1)**1.5
 plt.plot(x,fit)
 plt.show()
+
+plt.figure()
+plt.plot(R[:,0],R[:,1])
+plt.show
