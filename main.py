@@ -1,6 +1,5 @@
 import numpy as np
 import math
-from LJcalc import ljcalc
 import matplotlib.pyplot as plt 
 import rosenbluth
 pi=math.pi
@@ -9,8 +8,8 @@ sin=math.sin
 exp=math.exp
 L = 2
 T = 1
-polsize = 100  #max polymer size
-polpop = 10    # polymer population
+polsize = 150 #max polymer size
+polpop = 1000    # polymer population
 anglenum=6
 beadpos = np.zeros ((polsize,2))
 beadpos[1,:] = [1,0]
@@ -19,30 +18,22 @@ endmat = np.zeros((polpop, polsize))
 Radmat= np.zeros((polpop, polsize))
 Weightvec = np.zeros((polpop,1))
 for i in range(polpop):
-    beadpos, Weightvec[i], L = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize)
+    beadpos, Weightvec[i], L = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize)  
     endmat[i,:]=rosenbluth.Calcendtoend2(beadpos)
     Radmat[i,:]=rosenbluth.RadofGyr(beadpos)
 
-#
+endmat_mean, endmat_var = rosenbluth.Stat(endmat,Weightvec,polpop,polsize)
+
 #plt.figure()
 #plt.plot(beadpos[:,0],beadpos[:,1])
 #plt.show  
 
-
-
-              
-#
-#R2[np.where(R2==0)] = np.nan 
-##print R2
-#R2mean = np.nanmean(R2,axis=0)
-#R2var = np.nanvar(R2,axis=0,dtype=float)/(np.arange(polsize)**(0.5))
-#
-#plt.xscale("log", nonposx='clip')
-#plt.yscale("log", nonposy='clip')
-#plt.errorbar(np.arange(3,polsize+1),R2mean[2:], R2var[2:],linestyle = 'none',marker='x')
-#
-#plt.xlim([2,250])
-#plt.xlabel("N")
+plt.xscale("log", nonposx='clip')
+plt.yscale("log", nonposy='clip')
+plt.errorbar(np.arange(3,polsize+1),endmat_mean[2:], endmat_var[2:],linestyle = 'none',marker='x')
+##
+#plt.xlim([2,polsize])
+##plt.xlabel("N")
 #plt.ylabel("R^2")
 ##plt.plot(R[:,0],R[:,1])
 #
