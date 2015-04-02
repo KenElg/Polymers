@@ -7,8 +7,7 @@ cos=math.cos
 sin=math.sin
 exp=math.exp
     
-def Addbead(beadpos,Weight,L,anglenum,U,polsize):
-    Weightv = np.zeros((1,polsize))    
+def Addbead(beadpos,Weight,L,anglenum,U,polsize):   
     startang=np.random.random()
     w = np.zeros((1,anglenum))
     compare=np.zeros((anglenum,2))
@@ -63,12 +62,7 @@ def Stat(A,weights,polpop,polsize):
     var = np.ma.var (A_mask,axis=0)/(np.arange(polsize)**(0.5))
 #    var = np.ma.std(A_mask, axis=0)
     return mean, var
-#endmat[np.where(endmat==0)] = np.nan
-#Weightvec = np.reshape(Weightvec,(polpop))
-#endmat_mask = np.ma.MaskedArray(endmat, mask=np.isnan(endmat))
-#mean, sumweights = np.ma.average(endmat_mask,axis=0, weights=Weightvec,returned=True)
-##endmat_var = np.ma.std(endmat_mask, axis=0)
-#endmat_var = np.ma.var(endmat_mask,axis=0)/(np.arange(polsize)**(0.5))
+
 
 
 
