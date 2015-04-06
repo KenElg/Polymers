@@ -9,7 +9,7 @@ exp=math.exp
 L = 2
 T = 1
 polsize = 150 #max polymer size
-polpop = 10    # polymer population
+polpop = 1000    # polymer population
 anglenum=6
 beadpos = np.zeros ((polsize,2))
 beadpos[1,:] = [1,0]
@@ -24,13 +24,17 @@ for i in range(polpop):
 
 endmat_mean, endmat_var = rosenbluth.Stat(endmat,Weightvec,polpop,polsize)
 
+x = np.arange(polsize)
+slope, intercept = rosenbluth.Fit(x,endmat_mean)
+print intercept
+#plt.plot(x,np.power(10,intercept) * np.power(X,slope),'r')
 #plt.figure()
 #plt.plot(beadpos[:,0],beadpos[:,1])
 #plt.show  
 
-plt.xscale("log", nonposx='clip')
-plt.yscale("log", nonposy='clip')
-plt.errorbar(np.arange(3,polsize+1),endmat_mean[2:], endmat_var[2:],linestyle = 'none',marker='x')
+#plt.xscale("log", nonposx='clip')
+#plt.yscale("log", nonposy='clip')
+#plt.errorbar(np.arange(3,polsize+1),endmat_mean[2:], endmat_var[2:],linestyle = 'none',marker='x')
 ##
 #plt.xlim([2,polsize])
 ##plt.xlabel("N")

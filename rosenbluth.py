@@ -2,6 +2,7 @@
 import numpy as np
 import math
 from LJcalc import ljcalc
+import matplotlib.pyplot as plt 
 pi=math.pi
 cos=math.cos
 sin=math.sin
@@ -62,11 +63,16 @@ def Stat(A,weights,polpop,polsize):
 #    var = np.ma.std(A_mask, axis=0)
     return mean, var
 
-
-
-
-
-
-
-
-
+def Fit(x,y):
+    logx = np.log10(x[2:])
+    logy = np.log10(y[2:])
+    X = np.vstack([logx, np.ones(len(logx))]).T
+    slope, intercept = np.linalg.lstsq(X, logy)[0]
+    plt.figure()
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.plot(x[2:],y[2:],'x')
+#    plt.plot(logx,logy,'x')
+#    plt.plot(x[2:],np.power(10,intercept) * np.power(X,slope),'r')
+    plt.plot(x[2:],10**(slope*logx+intercept),'r')
+    return slope, intercept
