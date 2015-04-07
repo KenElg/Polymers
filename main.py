@@ -13,12 +13,13 @@ polpop = 1000    # polymer population
 anglenum=6
 beadpos = np.zeros ((polsize,2))
 beadpos[1,:] = [1,0]
+Prunevec=np.zeros((polsize,1))
 
 endmat = np.zeros((polpop, polsize))
 Radmat= np.zeros((polpop, polsize))
 Weightvec = np.zeros((polpop,1))
 for i in range(polpop):
-    beadpos, Weightvec[i], L = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize)  
+    beadpos, Weightvec[i], L = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize,Prunevec,0)  
     endmat[i,:]=rosenbluth.Calcendtoend2(beadpos)
     Radmat[i,:]=rosenbluth.RadofGyr(beadpos)
 

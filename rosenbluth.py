@@ -8,31 +8,51 @@ cos=math.cos
 sin=math.sin
 exp=math.exp
     
-def Addbead(beadpos,Weight,L,anglenum,U,polsize):   
-    startang=np.random.random()
-    w = np.zeros((1,anglenum))
-    compare=np.zeros((anglenum,2))
-    for i in range (anglenum):
-        theta = startang + i* 2 * pi/anglenum
-        beadpos[L,:]=[beadpos[L-1,0]+cos(theta),beadpos[L-1,1]+sin(theta)]
-        compare[i,:]= beadpos[L,:]
-        E=ljcalc(beadpos,L+1,U,polsize)
-        w[0,i]=exp(-E)
-    W = np.sum(w)
-    if W ==0:
-        print  "Last Beadnumber =", L
-    else:
-        Track = np.cumsum(w/W)
-        Test=np.random.random()
-        for i in range (len(Track)):   
-            if Test < Track[i]:      
-                num = i   #check in which of the rows of track our test falls
-                Test=Test+1 # Ensures we only have 1 found value
-        beadpos[L]=compare[num,:]
-        Weight=Weight*W
-        if L < polsize-1:          
-            Addbead(beadpos,Weight,L+1,anglenum,0,polsize)
-        return beadpos, Weight, L
+def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num):  
+    if num < 1000:
+        startang=np.random.random()
+        w = np.zeros((1,anglenum))
+        compare=np.zeros((anglenum,2))
+        alphaup=2
+        alphadown=1.2
+        for i in range (anglenum):
+            theta = startang + i* 2 * pi/anglenum
+            beadpos[L,:]=[beadpos[L-1,0]+cos(theta),beadpos[L-1,1]+sin(theta)]
+            compare[i,:]= beadpos[L,:]
+            E=ljcalc(beadpos,L+1,U,polsize)
+            w[0,i]=exp(-E)
+        W = np.sum(w)
+        Prunevec[L,0]=(Prunevec[L,0]+W)/num
+        if W ==0:
+            print  "Last Beadnumber =", L
+            num=num+1
+        else:
+            Track = np.cumsum(w/W)
+            Test=np.random.random()
+            for i in range (len(Track)):   
+                if Test < Track[i]:      
+                    num = i   #check in which of the rows of track our test falls
+                    Test=Test+1 # Ensures we only have 1 found value
+            beadpos[L]=compare[num,:]
+            Weight=Weight*W
+            UpLim=alphaup*Prunevec[L,0]/Prunevec[2,0]
+            LowLim=alphadown*Prunevec[L,0]/Prunevec[2,0]
+            if L < polsize-1:
+                if Weight > UpLim:
+                    NewWeight=0.5*Weight
+                    Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num)
+                    NewWeight=0.5*Weight
+                    Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num)
+                elif Weight < LowLim:
+                    Elimnum=np.random.random()
+                    if Elimnum < 0.5:
+                        NewWeight=2*Weight
+                        Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num)
+                else:
+                    Addbead(beadpos,Weight,L+1,anglenum,0,polsize,Prunevec,num)
+            else:
+                num=num+1
+            return beadpos, Weight, L
 
 
 
