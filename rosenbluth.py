@@ -26,7 +26,9 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num):
             print  "Last Beadnumber =", L
             num=num+1.0
         else:
-            Prunevec[L]=(Prunevec[L]+W)/num
+            Prunevec[L]=(Prunevec[L]+W)
+            AvW3=Prunevec[2]/num
+            AvWL=Prunevec[L]/num
             Track = np.cumsum(w/W)
             Test=np.random.random()
             for i in range (len(Track)):   
@@ -35,8 +37,8 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num):
                     Test=Test+1 # Ensures we only have 1 found value
             beadpos[L]=compare[num,:]
             Weight=Weight*W
-            UpLim=alphaup*Prunevec[L]/Prunevec[2]
-            LowLim=alphadown*Prunevec[L]/Prunevec[2]
+            UpLim=alphaup*AvWL/AvW3
+            LowLim=alphadown*AvWL/AvW3
             if L < polsize-1:
                 if Weight > UpLim:
                     print  "Multiplying strong chain"
