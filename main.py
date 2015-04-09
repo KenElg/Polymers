@@ -15,7 +15,7 @@ beadpos = np.zeros ((polsize,2))
 beadpos[1,:] = [1,0]
 Prunevec=np.zeros((polsize,1))
 num=1.0
-beadposlist=[np.zeros((polsize,2))]
+beadposlist=[]
 
 endmat = np.zeros((polpop, polsize))
 Radmat= np.zeros((polpop, polsize))
