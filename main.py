@@ -9,26 +9,27 @@ exp=math.exp
 L = 2
 T = 1
 polsize = 150 #max polymer size
-polpop = 1000    # polymer population
-anglenum=6
+polpop = 100    # polymer population
+anglenum=9
 beadpos = np.zeros ((polsize,2))
 beadpos[1,:] = [1,0]
 Prunevec=np.zeros((polsize,1))
 num=1.0
+beadposlist=[np.zeros((polsize,2))]
 
 endmat = np.zeros((polpop, polsize))
 Radmat= np.zeros((polpop, polsize))
 Weightvec = np.zeros((polpop,1))
 for i in range(polpop):
-    beadpos, Weightvec[i], L, Prunevec, num = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize,Prunevec, num)  
-    endmat[i,:]=rosenbluth.Calcendtoend2(beadpos)
-    Radmat[i,:]=rosenbluth.RadofGyr(beadpos)
-
-endmat_mean, endmat_var = rosenbluth.Stat(endmat,Weightvec,polpop,polsize)
-
-x = np.arange(polsize)
-slope, intercept = rosenbluth.Fit(x,endmat_mean)
-print intercept
+    beadpos, Weightvec[i], L, Prunevec, num, beadposlist = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize,Prunevec, num, beadposlist)  
+#    endmat[i,:]=rosenbluth.Calcendtoend2(beadpos)
+#    Radmat[i,:]=rosenbluth.RadofGyr(beadpos)
+#
+#endmat_mean, endmat_var = rosenbluth.Stat(endmat,Weightvec,polpop,polsize)
+#
+#x = np.arange(polsize)
+#slope, intercept = rosenbluth.Fit(x,endmat_mean)
+#print intercept
 #plt.plot(x,np.power(10,intercept) * np.power(X,slope),'r')
 #plt.figure()
 #plt.plot(beadpos[:,0],beadpos[:,1])
