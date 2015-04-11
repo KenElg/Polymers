@@ -8,7 +8,8 @@ cos=math.cos
 sin=math.sin
 exp=math.exp
     
-def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist):  
+def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist): 
+    
     startang=np.random.random()
     w = np.zeros((1,anglenum))
     compare=np.zeros((anglenum,2))
@@ -26,13 +27,13 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist):
         newpos=np.zeros((L,2))
         newpos[0:L-1,:]=beadpos[0:L-1,:]
         beadpos=newpos
-        num=num+1.0
         beadposlist.append(beadpos)
     else:
 #            print W
         Prunevec[L]=(Prunevec[L]+W)
-        AvW3=Prunevec[2]/num
-        AvWL=Prunevec[L]/num
+        num[L]=num[L]+1.0
+        AvW3=Prunevec[2]/num[2]
+        AvWL=Prunevec[L]/num[L]
         Track = np.cumsum(w/W)
         Test=np.random.random()
         for i in range (len(Track)):   
@@ -45,7 +46,7 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist):
         LowLim=alphadown*AvWL/AvW3
         if L < polsize-1:
             if Weight > UpLim:
-#                print  "Multiplying strong chain"
+                print  "Multiplying strong chain"
                 NewWeight=0.5*Weight
                 Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
                 Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
@@ -58,7 +59,6 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist):
             else:
                 Addbead(beadpos,Weight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
         else:
-            num=num+1
             beadposlist.append(beadpos)
         return beadpos, Weight, L, Prunevec, num, beadposlist
 

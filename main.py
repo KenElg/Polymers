@@ -14,7 +14,7 @@ anglenum=9
 beadpos = np.zeros ((polsize,2))
 beadpos[1,:] = [1,0]
 Prunevec=np.zeros((polsize,1))
-num=1.0
+num=np.zeros ((polsize,1))
 beadposlist=[]
 
 endmat = np.zeros((polpop, polsize))
