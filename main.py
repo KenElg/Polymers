@@ -6,24 +6,27 @@ pi=math.pi
 cos=math.cos
 sin=math.sin
 exp=math.exp
-L = 2
+
 T = 1
 polsize = 150 #max polymer size
 polpop = 100    # polymer population
 anglenum=9
-beadpos = np.zeros ((polsize,2))
-beadpos[1,:] = [1,0]
 Prunevec=np.zeros((polsize,1))
 num=np.zeros ((polsize,1))
 beadposlist=[]
-
-endmat = np.zeros((polpop, polsize))
-Radmat= np.zeros((polpop, polsize))
 Weightvec = np.zeros((polpop,1))
 for i in range(polpop):
-    beadpos, Weightvec[i], L, Prunevec, num, beadposlist = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize,Prunevec, num, beadposlist)  
-#    endmat[i,:]=rosenbluth.Calcendtoend2(beadpos)
-#    Radmat[i,:]=rosenbluth.RadofGyr(beadpos)
+    L = 2
+    beadpos = np.zeros ((polsize,2))
+    beadpos[1,:] = [1,0]
+    num, beadposlist = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize,Prunevec, num, beadposlist)  
+
+endmat = np.zeros((len(beadposlist), polsize))
+Radmat= np.zeros((len(beadposlist), polsize))
+for i in range(len(beadposlist)):  
+    endmat[i,0:len(beadposlist[i])]=rosenbluth.Calcendtoend2(beadposlist[i])
+    Radmat[i,0:len(beadposlist[i])]=rosenbluth.RadofGyr(beadposlist[i])
+
 #
 #endmat_mean, endmat_var = rosenbluth.Stat(endmat,Weightvec,polpop,polsize)
 #
