@@ -14,7 +14,6 @@ anglenum=9
 Prunevec=np.zeros((polsize,1))
 num=np.zeros ((polsize,1))
 beadposlist=[]
-Weightvec = np.zeros((polpop,1))
 for i in range(polpop):
     L = 2
     beadpos = np.zeros ((polsize,2))
@@ -28,7 +27,7 @@ for i in range(len(beadposlist)):
     Radmat[i,0:len(beadposlist[i])]=rosenbluth.RadofGyr(beadposlist[i])
 
 #
-#endmat_mean, endmat_var = rosenbluth.Stat(endmat,Weightvec,polpop,polsize)
+#endmat_mean = rosenbluth.Stat(endmat,Prunevec,polpop)
 #
 #x = np.arange(polsize)
 #slope, intercept = rosenbluth.Fit(x,endmat_mean)
