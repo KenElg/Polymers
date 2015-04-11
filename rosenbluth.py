@@ -86,10 +86,11 @@ def RadofGyr(beadpos):
 
 def Stat(A,weights,polpop,polsize):
     weights = np.reshape(weights,(polpop))
-    mean= np.average(A,axis = 0, weights = weights)
-    var = np.var(A,axis=0)/(np.arange(polsize)**(0.5))
-    return mean,var
-
+    A_mask = np.ma.MaskedArray(A,mask=0)
+    mean, sumweights = np.ma.average(A_mask,axis=0, weights=weights,returned=True)
+    var = np.ma.var (A_mask,axis=0)/(np.arange(polsize)**(0.5))
+#    var = np.ma.std(A_mask, axis=0)
+    return mean, var
 def Fit(x,y):
     logx = np.log10(x[2:])
     logy = np.log10(y[2:])
