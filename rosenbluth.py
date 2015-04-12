@@ -14,7 +14,7 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist):
     w = np.zeros((anglenum,1))
     compare=np.zeros((anglenum,2))
     alphaup=2
-    alphadown=0
+#    alphadown=0
     for i in range (anglenum):
         theta = startang + i* 2 * pi/anglenum
         beadpos[L,:]=[beadpos[L-1,0]+cos(theta),beadpos[L-1,1]+sin(theta)]
@@ -43,20 +43,20 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist):
         beadpos[L,:]=compare[numb,:]
         Weight=(Weight*W)/(0.75*anglenum)
         UpLim=alphaup*AvWL/AvW3
-        LowLim=alphadown*AvWL/AvW3
+#        LowLim=alphadown*AvWL/AvW3
         if L < polsize-1:
             if Weight > UpLim:
                 print  "Multiplying strong chain"
                 NewWeight=0.5*Weight
                 Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
                 Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
-            elif Weight < LowLim:
-                Elimnum=np.random.random()
-                print LowLim, Weight, UpLim
-                if Elimnum < 0.5:
-                    print "Pruning weak chain"
-                    NewWeight=2*Weight
-                    Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
+#            elif Weight < LowLim:
+#                Elimnum=np.random.random()
+#                print LowLim, Weight, UpLim
+#                if Elimnum < 0.5:
+#                    print "Pruning weak chain"
+#                    NewWeight=2*Weight
+#                    Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
             else:
                 Addbead(beadpos,Weight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
         else:

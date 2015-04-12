@@ -26,6 +26,11 @@ for i in range(len(beadposlist)):
     endmat[i,0:len(beadposlist[i])]=rosenbluth.Calcendtoend2(beadposlist[i])
     Radmat[i,0:len(beadposlist[i])]=rosenbluth.RadofGyr(beadposlist[i])
 
+# Plotting population size
+plt.figure()
+plt.plot(np.arange(150),num)
+plt.show()
+
 #
 #endmat_mean = rosenbluth.Stat(endmat,Prunevec,polpop)
 #
