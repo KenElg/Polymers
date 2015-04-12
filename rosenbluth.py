@@ -26,8 +26,7 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist):
         print  "Last Beadnumber =", L
         newpos=np.zeros((L-1,2))
         newpos[0:L-1,:]=beadpos[0:L-1,:]
-        beadpos=newpos
-        beadposlist.append(beadpos)
+        beadposlist.append(newpos)
     else:
 #        print W
         Prunevec[L]=(Prunevec[L]+W)

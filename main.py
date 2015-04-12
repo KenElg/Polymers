@@ -9,7 +9,7 @@ exp=math.exp
 
 T = 1
 polsize = 150 #max polymer size
-polpop = 100    # polymer population
+polpop = 1000    # polymer population
 anglenum=9
 Prunevec=np.zeros((polsize,1))
 num=np.zeros ((polsize,1))
