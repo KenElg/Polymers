@@ -9,7 +9,7 @@ cos=math.cos
 sin=math.sin
 exp=math.exp
     
-def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist,WeightVec,weightlist): 
+def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist): 
     
     startang=np.random.random()
     w = np.zeros((anglenum,1))
@@ -23,13 +23,11 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist,WeightV
         E=ljcalc(beadpos,L+1,U,polsize)
         w[i,0]=exp(-E)
     W = np.sum(w)
-    WeightVec[L]=W
     if W ==0:
         print  "Last Beadnumber =", L
         newpos=np.zeros((L-1,2))
         newpos[0:L-1,:]=beadpos[0:L-1,:]
         beadposlist.append(newpos)
-        weightlist.append(WeightVec)
     else:
 #        print W
         Prunevec[L]=(Prunevec[L]+W)
@@ -44,15 +42,14 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist,WeightV
                 Test=Test+1 # Ensures we only have 1 found value
         beadpos[L,:]=compare[numb,:]
         Weight=(Weight*W)/(0.75*anglenum)
-        WeightVec[L]=Weight
         UpLim=alphaup*AvWL/AvW3
 #        LowLim=alphadown*AvWL/AvW3
         if L < polsize-1:
             if Weight > UpLim:
                 print  "Multiplying strong chain"
                 NewWeight=0.5*Weight
-                Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist,WeightVec,weightlist)
-                Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist,WeightVec,weightlist)
+                Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
+                Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
 #            elif Weight < LowLim:
 #                Elimnum=np.random.random()
 #                print LowLim, Weight, UpLim
@@ -61,12 +58,11 @@ def Addbead(beadpos,Weight,L,anglenum,U,polsize,Prunevec,num,beadposlist,WeightV
 #                    NewWeight=2*Weight
 #                    Addbead(beadpos,NewWeight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
             else:
-                Addbead(beadpos,Weight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist,WeightVec,weightlist)
+                Addbead(beadpos,Weight,L+1,anglenum,0,polsize,Prunevec,num, beadposlist)
                 
         else:
             beadposlist.append(beadpos)
-            weightlist.append(WeightVec)
-    return num, beadposlist,weightlist
+    return num, beadposlist
 
 
 

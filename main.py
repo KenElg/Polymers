@@ -13,13 +13,11 @@ anglenum=9
 Prunevec=np.zeros((polsize,1))
 num=np.zeros ((polsize,1))
 beadposlist=[]
-weightlist = []
 for i in range(polpop):
     L = 2
     beadpos = np.zeros ((polsize,2))
-    WeightVec=np.zeros ((polsize,1))
     beadpos[1,:] = [1,0]
-    num, beadposlist,weightlist = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize,Prunevec, num, beadposlist,WeightVec,weightlist)  
+    num, beadposlist = rosenbluth.Addbead(beadpos,1,L,anglenum,0,polsize,Prunevec, num, beadposlist)  
 
 
 endmat = np.zeros((len(beadposlist), polsize))
