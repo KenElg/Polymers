@@ -91,7 +91,6 @@ def Stat(A,weights,polpop,polsize):
     var = np.ma.var (A_mask,axis=0)/(np.arange(polsize)**(0.5))
 #    var = np.ma.std(A_mask, axis=0)
     return mean, var
-
 def Fit(x,y):
     logx = np.log10(x[2:])
     logy = np.log10(y[2:])
@@ -101,8 +100,8 @@ def Fit(x,y):
     plt.xscale('log')
     plt.yscale('log')
     plt.plot(x[2:],y[2:],'x')
-    plt.plot(x[2:],x[2:]**1.5)
-#    plt.plot(logx,logy,'x')
-#    plt.plot(x[2:],np.power(10,intercept) * np.power(X,slope),'r')
-#    plt.plot(x[2:],10**(slope*logx+intercept),'r')
+#    plt.plot(x[2:],x[2:]**1.5)
+    plt.plot(logx,logy,'x')
+    plt.plot(x[2:],np.power(10,intercept) * np.power(X,slope),'r')
+    plt.plot(x[2:],10**(slope*logx+intercept),'r')
     return slope, intercept
