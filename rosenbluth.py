@@ -1,5 +1,6 @@
 #Rosenbluth
 import numpy as np
+import scipy.optimize as opt
 import math
 from LJcalc import ljcalc
 import matplotlib.pyplot as plt 
@@ -88,24 +89,26 @@ def RadofGyr(beadpos):
     return RG2
     
 
-def Stat(A,weights,polpop,polsize):
-    weights = np.reshape(weights,(polpop))
+def Stat(A,polpop,polsize):
+#    weights = np.reshape(weights,(polpop))
     A_mask = np.ma.MaskedArray(A,mask=0)
-    mean, sumweights = np.ma.average(A_mask,axis=0, weights=weights,returned=True)
-    var = np.ma.var (A_mask,axis=0)/(np.arange(polsize)**(0.5))
+    mean, sumweights = np.ma.average(A_mask,axis=0,returned=True)
+    var = np.ma.std (A_mask,axis=0)/(np.arange(polsize)**(0.5))
 #    var = np.ma.std(A_mask, axis=0)
     return mean, var
-def Fit(x,y):
-    logx = np.log10(x[2:])
-    logy = np.log10(y[2:])
-    X = np.vstack([logx, np.ones(len(logx))]).T
-    slope, intercept = np.linalg.lstsq(X, logy)[0]
+
+def func(x,a):
+    return a*x**1.5   
+    
+def Fit(polsize,y,y_error,ylabel,title):
+    x = np.arange(polsize)
+    a,cov = opt.curve_fit(func,x,y,0.0,None)
     plt.figure()
     plt.xscale('log')
     plt.yscale('log')
-    plt.plot(x[2:],y[2:],'x')
-#    plt.plot(x[2:],x[2:]**1.5)
-    plt.plot(logx,logy,'x')
-    plt.plot(x[2:],np.power(10,intercept) * np.power(X,slope),'r')
-    plt.plot(x[2:],10**(slope*logx+intercept),'r')
-    return slope, intercept
+    plt.errorbar(x[2:],y[2:], y_error[2:],linestyle = 'none',marker='x')
+    plt.plot(x[2:],func(x[2:],a))
+    plt.xlabel("N")
+    plt.ylabel(ylabel)
+    plt.title(title)
+    return a
